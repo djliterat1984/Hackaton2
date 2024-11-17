@@ -1,11 +1,13 @@
 require('dotenv').config();
-const {PGSTRINGURI} = process.env;
+const {PGSTRINGURI,PGPASSWORD, PGPORT} = process.env;
 
 module.exports = {
     client: 'pg', 
     connection: {
-        connectionString: PGSTRINGURI,
-        ssl: {rejectUnauthorized:false}
+      connectionString: PGSTRINGURI,
+      // password: PGPASSWORD,
+      port: PGPORT,
+      ssl: {rejectUnauthorized:false}
     },
     migrations: {
       directory: './migrations'
