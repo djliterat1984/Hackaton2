@@ -1,15 +1,19 @@
 const {
 	getAllPaymentsDetailsDB,
-	getAllPaymentsDB,
-	getPaymentByStudentDB,
 	insertPaymentDB,
 	updatePaymentAmountDB,
-	deletePaymentDB
+	deletePaymentDB,
+	getDetailsByMethodDB,
+	getDetailsByStudentDB,
+	// getPaymentDetailsByIdDB,
+	// getPaymentsDetailsByMethodDB,
+	// getPaymentsByStudentDB,
+	// getPaymentsByMethodDB
 } = require( '../models/paymentsData.js' )
 
 const getAllPayments = async( req, res ) => {
 	try {
-		const data = await getAllPaymentsDB();
+		const data = await getAllPaymentsDetailsDB();
 		res.json( data );	
 	} catch (error) {
 		console.log(error);
@@ -17,12 +21,14 @@ const getAllPayments = async( req, res ) => {
 	}
 }
 
-const getAllByType = async( req, res ) => {
+const getDetailsByMethod = async( req, res ) => {
 	try {
-		const { id } = req.params;
-		const data = await getAllPaymentsDetailsDB( id );
+		const { methodId } = req.params;
+		console.log('methodid', methodId);
+		
+		const data = await getDetailsByMethodDB( methodId );
 		if ( !data )
-			return res.status( 404 ).json( 'Post not found' )
+			return res.status( 404 ).json( 'Method not found' )
 		
 		console.log( data );
 		res.json(data)
@@ -32,12 +38,12 @@ const getAllByType = async( req, res ) => {
 	}
 }
 
-const getAllByStudent = async( req, res ) => {
+const getDetailsByStudent = async( req, res ) => {
 	try {
 		const { studentId } = req.params;
-		const data = await getPaymentDetailsByIdDB( studentId );
+		const data = await getDetailsByStudentDB( studentId );
 		if ( !data )
-			return res.status( 404 ).json( 'Post not found' )
+			return res.status( 404 ).json( 'Student Not found' )
 		
 		console.log( data );
 		res.json(data)
@@ -52,7 +58,7 @@ const newPayment = async ( req, res ) => {
 		const { studentId, paymentMethodId, amount } = req.body;
 		const data = await insertPaymentDB( studentId, paymentMethodId, amount );	
 		if ( !data )
-			return res.status( 404 ).json( 'Post not found' )
+			return res.status( 400 ).json( 'OOPS....Check the fields and try again.' )
 		
 		console.log( data );
 		res.json(data)
@@ -69,7 +75,7 @@ const updatePayment = async ( req, res ) => {
 		const data = await updatePaymentAmountDB( id, newAmount );
 		
 		if ( !data )
-			return res.status( 404 ).json( 'Post not found' )
+			return res.status( 400 ).json( 'OOPS....Check the fields and try again.' )
 		
 		console.log( data );
 		res.json(data)
@@ -83,6 +89,10 @@ const deletePayment = async ( req, res ) => {
 	try {
 		const { id } = req.params;
 		const data = await deletePaymentDB( id );	
+		if ( !data )
+			return res.status( 404 ).json( 'OOPS....Check the fields and try again.'  )
+		
+		res.json(data)
 	} catch (error) {
 		console.log(error);
 		res.status(500).json({message:'something went wrong'})
@@ -91,8 +101,8 @@ const deletePayment = async ( req, res ) => {
 
 module.exports = {
 	getAllPayments,
-	getAllByType,
-	getAllByStudent,
+	getDetailsByMethod,
+	getDetailsByStudent,
 	newPayment,
 	updatePayment,
 	deletePayment,

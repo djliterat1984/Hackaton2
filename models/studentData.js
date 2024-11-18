@@ -23,7 +23,7 @@ const updateStudentDB = (id, name, debt) => {
     return db("students").where({id}).update(updateData, ["id", "name", "debt"]);
 }
 
-const  deleteStudentByIdDB = (id) => {
+const  deleteStudentDB = (id) => {
     return db('students').where({id}).del().returning(["id", "name", "debt"]);
 }
 
@@ -32,5 +32,5 @@ module.exports = {
     getStudentByIdDB,
     insertStudentDB,
     updateStudentDB,
-    deleteStudentByIdDB
+    deleteStudentDB
 }

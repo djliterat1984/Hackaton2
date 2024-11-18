@@ -1,21 +1,21 @@
 const {db} = require("../config/db.js");
 const { getStudentByIdDB } = require("./studentData.js");
 
-const getAllPaymentsDB = () => {
-    return db('payments').select("payment_id", "student_id", "method_id", "amount");
-}
+// const getAllPaymentsDB = () => {
+//     return db('payments').select("payment_id", "student_id", "method_id", "amount");
+// }
 
-const getPaymentByIdDB = (payment_id) => {
-    return db('payments').where({payment_id}).select("payment_id", "student_id", "method_id", "amount");
-}
+// const getPaymentByIdDB = (payment_id) => {
+//     return db('payments').where({payment_id}).select("payment_id", "student_id", "method_id", "amount");
+// }
 
-const getPaymentsByStudentDB = (student_id) => {
-  return db('payments').where({student_id}).select("payment_id", "student_id", "method_id", "amount");
-}
+// const getPaymentsByStudentDB = (student_id) => {
+//   return db('payments').where({student_id}).select("payment_id", "student_id", "method_id", "amount");
+// }
 
-const getPaymentsByMethodDB =(method_id) => {
-  return db('payments').where({method_id}).select("payment_id", "student_id", "method_id", "amount");
-}
+// const getPaymentsByMethodDB =(method_id) => {
+//   return db('payments').where({method_id}).select("payment_id", "student_id", "method_id", "amount");
+// }
 
 // these two need work to figure out how the debt should be displayed properly
 const getAllPaymentsDetailsDB = () => {
@@ -48,7 +48,7 @@ const getPaymentDetailsByIdDB = (studentId) => {
     // .join('payment_methods', 'payments.method_id', '=', 'payment_methods.method_id')  // Join with payment_methods table
     .where('payments.student_id', studentId); 
 }
-const getPaymentsDetailsByStudentDB = (student_id) => {
+const getDetailsByStudentDB = ( student_id ) => {  
   return db('payments')
   .select(
     'payments.payment_id',       // Payment ID
@@ -64,7 +64,7 @@ const getPaymentsDetailsByStudentDB = (student_id) => {
   .where('payments.student_id', student_id); 
 }
 
-const getPaymentsDetailsByMethodDB = (method_id) => {
+const getDetailsByMethodDB = (method_id) => {
   return db('payments')
   .select(
     'payments.payment_id',       // Payment ID
@@ -155,14 +155,14 @@ const deletePaymentDB = async (payment_id) => {
 };
 
 module.exports = {
-    getAllPaymentsDB,
+    // getAllPaymentsDB,
     insertPaymentDB,
     updatePaymentAmountDB,
     deletePaymentDB,
     getAllPaymentsDetailsDB,
     getPaymentDetailsByIdDB,
-    getPaymentsDetailsByStudentDB,
-    getPaymentsDetailsByMethodDB,
-    getPaymentsByStudentDB,
-    getPaymentsByMethodDB,
+    getDetailsByStudentDB,
+    getDetailsByMethodDB,
+    // getPaymentsByStudentDB,
+    // getPaymentsByMethodDB,
 }

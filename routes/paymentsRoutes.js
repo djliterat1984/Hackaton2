@@ -1,8 +1,8 @@
 const express = require( 'express' );
 const {
 	getAllPayments,
-	getAllByType,
-	getAllByStudent,
+	getDetailsByMethod,
+	getDetailsByStudent,
 	newPayment,
 	updatePayment,
 	deletePayment
@@ -13,9 +13,9 @@ const paymentRouter = express.Router();
 
 paymentRouter.get( '/', getAllPayments );
 
-paymentRouter.get( '/method/:method_id', getAllByType );
+paymentRouter.get( '/method/:methodId', getDetailsByMethod );
 
-paymentRouter.get( '/student/:student_id', getAllByStudent );
+paymentRouter.get( '/student/:studentId', getDetailsByStudent );
 
 paymentRouter.post( '/', newPayment );
 
@@ -24,10 +24,3 @@ paymentRouter.put( '/:id', updatePayment );
 paymentRouter.delete( '/:id', deletePayment );
 
 module.exports = paymentRouter
-
-// Get all payments
-// Get all payments by type
-// get all payments by student
-// Record payment - update debt
-// update payment - update debt
-// delete payment - update debt
