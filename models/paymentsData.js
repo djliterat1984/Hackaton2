@@ -25,20 +25,20 @@ const getAllPaymentsDetailsDB = () => {
     .join('payment_methods', 'payments.method_id', '=', 'payment_methods.method_id')  // Join with payment_methods table
 }
 
-const getPaymentDetailsByIdDB = (payment_id) => {
+const getPaymentByStudentDB = (studentId) => {
     return db('payments')
     .select(
       'payments.payment_id',       // Payment ID
       'payments.student_id',       // Student ID
       'students.name as student_name',  // Student's Name
       'payments.method_id',        // Payment Method ID
-      'payment_methods.name as method_name', // Payment Method Name
+      // 'payment_methods.name as method_name', // Payment Method Name
       'payments.amount',           // Payment Amount
       'students.debt'              // Student's Debt
     )
-    .join('students', 'payments.student_id', '=', 'students.id')  // Join with students table
-    .join('payment_methods', 'payments.method_id', '=', 'payment_methods.method_id')  // Join with payment_methods table
-    .where('payments.payment_id', payment_id); 
+    .join('students', 'payments.student_id', '=', studentId)  // Join with students table
+    // .join('payment_methods', 'payments.method_id', '=', 'payment_methods.method_id')  // Join with payment_methods table
+    .where('payments.student_id', studentId); 
 }
 
 const makePayment = async (trx, student_id, method_id, amount) => {
@@ -121,5 +121,5 @@ module.exports = {
     updatePaymentAmountDB,
     deletePaymentDB,
     getAllPaymentsDetailsDB,
-    getPaymentDetailsByIdDB
+    getPaymentByStudentDB
 }
