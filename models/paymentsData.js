@@ -9,6 +9,14 @@ const getPaymentByIdDB = (payment_id) => {
     return db('payments').where({payment_id}).select("payment_id", "student_id", "method_id", "amount");
 }
 
+const getPaymentsByStudentDB = (student_id) => {
+  return db('payments').where({student_id}).select("payment_id", "student_id", "method_id", "amount");
+}
+
+const getPaymentsByMethodDB =(method_id) => {
+  return db('payments').where({method_id}).select("payment_id", "student_id", "method_id", "amount");
+}
+
 // these two need work to figure out how the debt should be displayed properly
 const getAllPaymentsDetailsDB = () => {
     return db('payments')
@@ -25,7 +33,7 @@ const getAllPaymentsDetailsDB = () => {
     .join('payment_methods', 'payments.method_id', '=', 'payment_methods.method_id')  // Join with payment_methods table
 }
 
-const getPaymentByStudentDB = (studentId) => {
+const getPaymentDetailsByIdDB = (studentId) => {
     return db('payments')
     .select(
       'payments.payment_id',       // Payment ID
@@ -39,6 +47,37 @@ const getPaymentByStudentDB = (studentId) => {
     .join('students', 'payments.student_id', '=', studentId)  // Join with students table
     // .join('payment_methods', 'payments.method_id', '=', 'payment_methods.method_id')  // Join with payment_methods table
     .where('payments.student_id', studentId); 
+}
+const getPaymentsDetailsByStudentDB = (student_id) => {
+  return db('payments')
+  .select(
+    'payments.payment_id',       // Payment ID
+    'payments.student_id',       // Student ID
+    'students.name as student_name',  // Student's Name
+    'payments.method_id',        // Payment Method ID
+    'payment_methods.name as method_name', // Payment Method Name
+    'payments.amount',           // Payment Amount
+    'students.debt'              // Student's Debt
+  )
+  .join('students', 'payments.student_id', '=', 'students.id')  // Join with students table
+  .join('payment_methods', 'payments.method_id', '=', 'payment_methods.method_id')  // Join with payment_methods table
+  .where('payments.student_id', student_id); 
+}
+
+const getPaymentsDetailsByMethodDB = (method_id) => {
+  return db('payments')
+  .select(
+    'payments.payment_id',       // Payment ID
+    'payments.student_id',       // Student ID
+    'students.name as student_name',  // Student's Name
+    'payments.method_id',        // Payment Method ID
+    'payment_methods.name as method_name', // Payment Method Name
+    'payments.amount',           // Payment Amount
+    'students.debt'              // Student's Debt
+  )
+  .join('students', 'payments.student_id', '=', 'students.id')  // Join with students table
+  .join('payment_methods', 'payments.method_id', '=', 'payment_methods.method_id')  // Join with payment_methods table
+  .where('payments.method_id', method_id); 
 }
 
 const makePayment = async (trx, student_id, method_id, amount) => {
@@ -121,5 +160,9 @@ module.exports = {
     updatePaymentAmountDB,
     deletePaymentDB,
     getAllPaymentsDetailsDB,
-    getPaymentByStudentDB
+    getPaymentDetailsByIdDB,
+    getPaymentsDetailsByStudentDB,
+    getPaymentsDetailsByMethodDB,
+    getPaymentsByStudentDB,
+    getPaymentsByMethodDB,
 }
