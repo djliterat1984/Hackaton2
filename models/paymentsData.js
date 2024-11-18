@@ -9,6 +9,38 @@ const getPaymentByIdDB = (payment_id) => {
     return db('payments').where({payment_id}).select("payment_id", "student_id", "method_id", "amount");
 }
 
+// these two need work to figure out how the debt should be displayed properly
+const getAllPaymentsDetailsDB = () => {
+    return db('payments')
+    .select(
+      'payments.payment_id',       // Payment ID
+      'payments.student_id',       // Student ID
+      'students.name as student_name',  // Student's Name
+      'payments.method_id',        // Payment Method ID
+      'payment_methods.name as method_name', // Payment Method Name
+      'payments.amount',           // Payment Amount
+      'students.debt'              // Student's Debt
+    )
+    .join('students', 'payments.student_id', '=', 'students.id')  // Join with students table
+    .join('payment_methods', 'payments.method_id', '=', 'payment_methods.method_id')  // Join with payment_methods table
+}
+
+const getPaymentDetailsByIdDB = (payment_id) => {
+    return db('payments')
+    .select(
+      'payments.payment_id',       // Payment ID
+      'payments.student_id',       // Student ID
+      'students.name as student_name',  // Student's Name
+      'payments.method_id',        // Payment Method ID
+      'payment_methods.name as method_name', // Payment Method Name
+      'payments.amount',           // Payment Amount
+      'students.debt'              // Student's Debt
+    )
+    .join('students', 'payments.student_id', '=', 'students.id')  // Join with students table
+    .join('payment_methods', 'payments.method_id', '=', 'payment_methods.method_id')  // Join with payment_methods table
+    .where('payments.payment_id', payment_id); 
+}
+
 const makePayment = async (trx, student_id, method_id, amount) => {
     // attempt to save payment
     const payment = await trx('payments').insert({student_id, method_id, amount}, ["payment_id", "student_id", "method_id", "amount"])
@@ -88,4 +120,6 @@ module.exports = {
     insertPaymentDB,
     updatePaymentAmountDB,
     deletePaymentDB,
+    getAllPaymentsDetailsDB,
+    getPaymentDetailsByIdDB
 }
