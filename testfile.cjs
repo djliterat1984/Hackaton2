@@ -1,5 +1,5 @@
 const { getAllPaymentMethodsDB, getPaymentMethodByIdDB, insertPaymentMethodDB, updatePaymentMethodDB, deletePaymentMethodByIdDB } = require("./models/paymentMethodData.js");
-const { getAllPaymentsDB, insertPaymentDB, deletePaymentDB, updatePaymentAmountDB, getAllPaymentsDetailsDB, getPaymentDetailsByIdDB } = require("./models/paymentsData.js");
+const { getAllPaymentsDB, insertPaymentDB, deletePaymentDB, updatePaymentAmountDB, getAllPaymentsDetailsDB, getPaymentDetailsByIdDB, getPaymentsByStudentDB, getPaymentsByMethodDB, getPaymentsDetailsByMethodDB, getPaymentsDetailsByStudentDB } = require("./models/paymentsData.js");
 const {getAllStudentsDB, getStudentByIdDB, insertStudentDB, updateStudentDB, deleteStudentByIdDB} = require("./models/studentData.js");
 
 const  testStudentsModel = async() => {
@@ -54,8 +54,12 @@ const testPaymentsModel = async() => {
     // const allDetails = await getAllPaymentsDetailsDB();
     // console.log(allDetails);
 
-    const details1 = await getPaymentDetailsByIdDB(1);
-    console.log(details1);
+    // const details1 = await getPaymentDetailsByIdDB(1);
+    // console.log(details1);
+    // const student1_payments = await getPaymentsDetailsByStudentDB(1);
+    // console.log(student1_payments);
+    const methood1_payments = await getPaymentsDetailsByMethodDB(2);
+    console.log(methood1_payments);
     
     // const allPayments = await getAllPaymentsDB();
 
