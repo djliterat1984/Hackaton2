@@ -1,6 +1,7 @@
+const { getAllPaymentMethodsDB, getPaymentMethodByIdDB, insertPaymentMethodDB, updatePaymentMethodDB, deletePaymentMethodByIdDB } = require("./models/paymentMethodData.js");
 const {getAllStudentsDB, getStudentByIdDB, insertStudentDB, updateStudentDB, deleteStudentByIdDB} = require("./models/studentData.js");
 
-const  test = async() => {
+const  testStudentsModel = async() => {
     const students = await getAllStudentsDB();
     console.log("Students")
     console.log(students);
@@ -28,4 +29,24 @@ const  test = async() => {
     
 }
 
-test();
+const testMethodModel = async() => {
+    const methods = await getAllPaymentMethodsDB();
+    console.log(methods);
+    const [method1] = await getPaymentMethodByIdDB(1);
+    console.log(method1);
+    const updated = await  updatePaymentMethodDB(3, "Zelle");
+    console.log(updated)
+    console.log("New method");
+    const newMethod = await insertPaymentMethodDB("Paybox", true);
+    console.log(newMethod);
+    const newList = await getAllPaymentMethodsDB();
+    console.log(newList);
+    console.log("Deactivating");
+    const deactive = await deletePaymentMethodByIdDB(newMethod.method_id);
+    console.log(deactive);
+    
+    const lastList = await getAllPaymentMethodsDB();
+    console.log(lastList);
+}
+// testStudentsModel();
+// testMethodModel();
