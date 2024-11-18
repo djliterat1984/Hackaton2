@@ -8,11 +8,17 @@ const express = require( 'express' );
 
 const paymentRouter = express.Router();
 
-paymentRouter.get( '/', getAllBooks );
+paymentRouter.get( '/', getAllPayments );
 
-paymentRouter.get( '/:id', getBookById );
+paymentRouter.get( '/:id', getAllByType );
 
-paymentRouter.post( '/', createNewBook );
+paymentRouter.get( '/:id', getAllByStudent );
+
+paymentRouter.post( '/', addNewPayment );
+
+paymentRouter.post( '/:id', updatePayment );
+
+paymentRouter.post( '/:id', deletePayment );
 
 module.exports = paymentRouter
 

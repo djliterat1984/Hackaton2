@@ -1,4 +1,5 @@
 const express = require( 'express' );
+const paymentRouter = require( './routes/paymentsRoutes' );
 
 const app = express();
 
@@ -9,4 +10,5 @@ app.listen( PORT, () => {
 	console.log(`run on ${PORT}`);
 } )
 
+app.use('/payments', paymentRouter)
 

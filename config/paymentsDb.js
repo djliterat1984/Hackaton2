@@ -1,7 +1,7 @@
 const knex = require( 'knex' );
 const { client, connection, migrations, seeds } = require('../knexfile.js');
 
-const blogApiDb = knex( {
+const paymentsDb = knex( {
 	client: client,
 	connection: {
 		connectionString: connection.connectionString,
@@ -17,5 +17,5 @@ const blogApiDb = knex( {
 } );
 
 module.exports = {
-	blogApiDb,
+	paymentsDb,
 }
