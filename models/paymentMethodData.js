@@ -23,7 +23,7 @@ const updatePaymentMethodDB = (method_id, name, active) => {
     return db("payment_methods").where({method_id}).update(updateData, ["method_id", "name", "active"]);
 }
 
-const  deletePaymentMethodByIdDB = (method_id) => {
+const  deletePaymentMethodDB = (method_id) => {
     return updatePaymentMethodDB(method_id,undefined,false);
 }
 
@@ -32,5 +32,5 @@ module.exports = {
     getPaymentMethodByIdDB,
     insertPaymentMethodDB,
     updatePaymentMethodDB,
-    deletePaymentMethodByIdDB
+    deletePaymentMethodDB
 }

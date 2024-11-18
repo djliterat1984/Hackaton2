@@ -1,5 +1,7 @@
 const { getAllPaymentMethodsDB, getPaymentMethodByIdDB, insertPaymentMethodDB, updatePaymentMethodDB, deletePaymentMethodByIdDB } = require("./models/paymentMethodData.js");
-const { getAllPaymentsDB, insertPaymentDB, deletePaymentDB, updatePaymentAmountDB, getAllPaymentsDetailsDB, getPaymentDetailsByIdDB, getPaymentsByStudentDB, getPaymentsByMethodDB, getPaymentsDetailsByMethodDB, getPaymentsDetailsByStudentDB } = require("./models/paymentsData.js");
+const {
+    // getAllPaymentsDB,
+    insertPaymentDB, deletePaymentDB, updatePaymentAmountDB, getAllPaymentsDetailsDB, getPaymentDetailsByIdDB, getPaymentsByStudentDB, getPaymentsByMethodDB, getPaymentsDetailsByMethodDB, getPaymentsDetailsByStudentDB } = require( "./models/paymentsData.js" );
 const {getAllStudentsDB, getStudentByIdDB, insertStudentDB, updateStudentDB, deleteStudentByIdDB} = require("./models/studentData.js");
 
 const  testStudentsModel = async() => {
