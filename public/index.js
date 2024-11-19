@@ -57,12 +57,13 @@ document.getElementById( 'deleteStudentsBtn' ).addEventListener( 'click', () => 
 } )
 
 document.getElementById( 'payMethodsBtn' ).addEventListener( 'click', () => {
-
+	loadContent(`/methods/details`)
 } )
 
 
 document.getElementById( 'payMethodByIdBtn' ).addEventListener( 'click', () => {
-
+	const id = prompt("Enter a method Id: ");
+	loadContent(`/methods/details/${id}`)
 } )
 
 document.getElementById( 'addPayMethodsBtn' ).addEventListener( 'click', () => {
@@ -99,6 +100,57 @@ document.getElementById( 'updatePaymentBtn' ).addEventListener( 'click', () => {
 
 } )
 
-document.getElementById( 'deletePaymentBtn' ).addEventListener( 'click', () => {
+// document.getElementById( 'deletePaymentBtn' ).addEventListener( 'click', () => {
+// 	const id = prompt("Enter payment Id to delete: ");
+// 	const payment_page = await fetch("/payments", {})
 
-} )
+// } )
+document.getElementById('deletePaymentBtn').addEventListener('click', function() {
+  // Step 1: Prompt for payment ID
+  const paymentId = prompt("Enter the payment ID to delete:");
+  
+  if (!paymentId) {
+    alert("No payment ID provided.");
+    return;
+  }
+
+  // Step 2: Fetch payment details using GET request
+  fetch(`payments/${paymentId}`)
+  .then(response => {console.log(response); return response.json();})
+  .then(paymentDetails => {
+    // Step 3: Show a confirmation box with payment details
+	console.log(paymentDetails);
+    const confirmMessage = `
+      Are you sure you want to delete this payment?
+      Payment ID: ${paymentDetails[0].payment_id}
+      Amount: ${paymentDetails[0].amount}
+    `;
+    const isConfirmed = confirm(confirmMessage);
+    
+    if (isConfirmed) {
+      // Step 4: If confirmed, send a DELETE request with the payment ID
+      fetch(`payments/${paymentId}`, {
+        method: 'DELETE', // POST method to delete payment
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+      .then(response => response.json()) // Parse the JSON response
+      .then(result => {
+        // Step 5: Alert the user about the deletion success
+        alert(`Successfully deleted: ${JSON.stringify(result)}`);
+      })
+      .catch(error => {
+        console.error('Error deleting payment:', error);
+        alert('There was an error deleting the payment.');
+      });
+    } else {
+      // If not confirmed
+      alert('Payment deletion canceled.');
+    }
+  })
+  .catch(error => {
+    console.error('Error fetching payment details:', error);
+    alert('Error fetching payment details.');
+  });
+});

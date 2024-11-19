@@ -8,7 +8,8 @@ const {
 	deletePayment,
 	listAllPayments,
 	listDetailsByStudent,
-	listDetailsByMethod
+	listDetailsByMethod,
+	getPaymentById
 } = require( '../controllers/paymentsController.js' );
 
 
@@ -25,6 +26,8 @@ paymentRouter.get( '/details/method/:methodId', listDetailsByMethod);
 paymentRouter.get( '/method/:methodId', getDetailsByMethod );
 
 paymentRouter.get( '/student/:studentId', getDetailsByStudent );
+
+paymentRouter.get( '/:paymentId', getPaymentById)
 
 paymentRouter.post( '/', newPayment );
 

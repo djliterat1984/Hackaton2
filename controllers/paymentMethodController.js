@@ -16,6 +16,16 @@ const getAllPaymentMethods = async( req, res ) => {
 	}
 }
 
+const listAllPaymentMethods = async( req, res ) => {
+	try {
+		const methods = await getAllPaymentMethodsDB()
+		res.render('partials/methods-list', { methods});		
+	} catch (error) {
+		console.log(error);
+		res.status(500).json({message:'something went wrong'})
+	}
+}
+
 const getPaymentMethodById = async( req, res ) => {
 	try {
 		const { id } = req.params;
@@ -25,6 +35,20 @@ const getPaymentMethodById = async( req, res ) => {
 		
 		console.log( data );
 		res.json(data)
+	} catch (error) {
+		console.log(error);
+		res.status(500).json({message:'something went wrong'})
+	}
+}
+
+const listPaymentMethodById = async( req, res ) => {
+	try {
+		const { id } = req.params;
+		const methods = await getPaymentMethodByIdDB( id );
+		if ( !methods )
+			return res.status( 404 ).json( 'Not found' )
+		
+		res.render('partials/methods-list', { methods});	
 	} catch (error) {
 		console.log(error);
 		res.status(500).json({message:'something went wrong'})
@@ -83,4 +107,6 @@ module.exports = {
 	newPaymentMethod,
 	updatePaymentMethod,
 	deletePaymentMethod,
+	listAllPaymentMethods,
+	listPaymentMethodById,
 }

@@ -5,7 +5,7 @@ const {
 	deletePaymentDB,
 	getDetailsByMethodDB,
 	getDetailsByStudentDB,
-	// getPaymentDetailsByIdDB,
+	getPaymentDetailsByIdDB,
 	// getPaymentsDetailsByMethodDB,
 	// getPaymentsByStudentDB,
 	// getPaymentsByMethodDB
@@ -15,6 +15,17 @@ const getAllPayments = async( req, res ) => {
 	try {
 		const data = await getAllPaymentsDetailsDB();
 		res.json( data );	
+	} catch (error) {
+		console.log(error);
+		res.status(500).json({message:'something went wrong'})
+	}
+}
+
+const getPaymentById = async ( req, res ) => {
+	const {paymentId} = req.params;
+	try {
+		const payment = await getPaymentDetailsByIdDB(paymentId);
+		res.json( payment );	
 	} catch (error) {
 		console.log(error);
 		res.status(500).json({message:'something went wrong'})
@@ -152,4 +163,5 @@ module.exports = {
 	listAllPayments,
 	listDetailsByMethod,
 	listDetailsByStudent,
+	getPaymentById
 }
