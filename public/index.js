@@ -1,74 +1,102 @@
-document.getElementById( 'studentsBtn' ).addEventListener( 'click', async ( event ) => {
-	try {
-		event.preventDefault()
-		console.log('hola');
+// Function to show the loading overlay
+function showLoadingOverlay() {
+	document.getElementById('loading-overlay').style.display = 'flex';
+}
+
+// Function to hide the loading overlay
+function hideLoadingOverlay() {
+document.getElementById('loading-overlay').style.display = 'none';
+}
+// Fetch function to load content into the 'content' div
+function loadContent(url) {
+	showLoadingOverlay();
+	fetch(url)
+	.then(response => response.text())
+	.then(html => {
+	  // Insert the HTML content into the content div
+	  document.getElementById('dynamic-content').innerHTML = html;
+	})
+	.catch(error => {
+	  console.error('Error loading content:', error);
+	}).finally(()=> {hideLoadingOverlay();});
+}
+
+// Event listener for the "All Students" button
+document.getElementById('studentsBtn').addEventListener('click', function() {
+  // Fetch the students list partial
+  loadContent('/students/studentslist');
+});
+// document.getElementById( 'studentsBtn' ).addEventListener( 'click', async ( event ) => {
+// 	try {
+// 		event.preventDefault()
+// 		console.log('hola');
 		
-		const response = await fetch( 'http://localhost:3001/students/');
-		const result = await response.json()
-		console.log(result);
-	} catch (error) {
-		console.log(error);
-	}
-} )
+// 		const response = await fetch( 'http://localhost:3001/students/');
+// 		const result = await response.json()
+// 		console.log(result);
+// 	} catch (error) {
+// 		console.log(error);
+// 	}
+// } )
 
-ument.getElementById( 'studentByIdBtn' ).addEventListener( 'click', () => {
-
-} )
-
-ument.getElementById( 'addStudentsBtn' ).addEventListener( 'click', () => {
+document.getElementById( 'studentByIdBtn' ).addEventListener( 'click', () => {
 
 } )
 
-ument.getElementById( 'updateStudentsBtn' ).addEventListener( 'click', () => {
+document.getElementById( 'addStudentsBtn' ).addEventListener( 'click', () => {
 
 } )
 
-
-ument.getElementById( 'deleteStudentsBtn' ).addEventListener( 'click', () => {
-
-} )
-
-ument.getElementById( 'payMethodsBtn' ).addEventListener( 'click', () => {
+document.getElementById( 'updateStudentsBtn' ).addEventListener( 'click', () => {
 
 } )
 
 
-ument.getElementById( 'payMethodByIdBtn' ).addEventListener( 'click', () => {
+document.getElementById( 'deleteStudentsBtn' ).addEventListener( 'click', () => {
 
 } )
 
-ument.getElementById( 'addPayMethodsBtn' ).addEventListener( 'click', () => {
+document.getElementById( 'payMethodsBtn' ).addEventListener( 'click', () => {
 
 } )
 
-ument.getElementById( 'updatePayMethodsBtn' ).addEventListener( 'click', () => {
+
+document.getElementById( 'payMethodByIdBtn' ).addEventListener( 'click', () => {
 
 } )
 
-ument.getElementById( 'deletePayMethodsBtn' ).addEventListener( 'click', () => {
+document.getElementById( 'addPayMethodsBtn' ).addEventListener( 'click', () => {
 
 } )
 
-ument.getElementById( 'paymentsBtn' ).addEventListener( 'click', () => {
+document.getElementById( 'updatePayMethodsBtn' ).addEventListener( 'click', () => {
 
 } )
 
-ument.getElementById( 'payByMethodBtn' ).addEventListener( 'click', () => {
+document.getElementById( 'deletePayMethodsBtn' ).addEventListener( 'click', () => {
 
 } )
 
-ument.getElementById( 'payByStudentBtn' ).addEventListener( 'click', () => {
+document.getElementById( 'paymentsBtn' ).addEventListener( 'click', () => {
 
 } )
 
-ument.getElementById( 'addPayment' ).addEventListener( 'click', () => {
+document.getElementById( 'payByMethodBtn' ).addEventListener( 'click', () => {
 
 } )
 
-ument.getElementById( 'updatePaymentBtn' ).addEventListener( 'click', () => {
+document.getElementById( 'payByStudentBtn' ).addEventListener( 'click', () => {
 
 } )
 
-ument.getElementById( 'deletePaymentBtn' ).addEventListener( 'click', () => {
+document.getElementById( 'addPayment' ).addEventListener( 'click', () => {
+
+} )
+
+document.getElementById( 'updatePaymentBtn' ).addEventListener( 'click', () => {
+
+} )
+
+document.getElementById( 'deletePaymentBtn' ).addEventListener( 'click', () => {
 
 } )
