@@ -24,7 +24,7 @@ function loadContent(url) {
 // Event listener for the "All Students" button
 document.getElementById('studentsBtn').addEventListener('click', function() {
   // Fetch the students list partial
-  loadContent('/students/studentslist');
+  loadContent('students/studentslist');
 });
 // document.getElementById( 'studentsBtn' ).addEventListener( 'click', async ( event ) => {
 // 	try {
