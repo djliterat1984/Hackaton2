@@ -63,7 +63,7 @@ const newPaymentMethod = async ( req, res ) => {
 			return res.status( 404 ).json( 'OOPS....Check the fields and try again.' )
 		
 		console.log( data );
-		res.json(data)
+		res.status(201).json(data)
 	} catch (error) {
 		console.log(error);
 		res.status(500).json({message:'something went wrong'})

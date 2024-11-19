@@ -1,12 +1,12 @@
-// Function to show the loading overlay
-function showLoadingOverlay() {
-	document.getElementById('loading-overlay').style.display = 'flex';
-}
+// // Function to show the loading overlay
+// function showLoadingOverlay() {
+// 	document.getElementById('loading-overlay').style.display = 'flex';
+// }
 
-// Function to hide the loading overlay
-function hideLoadingOverlay() {
-document.getElementById('loading-overlay').style.display = 'none';
-}
+// // Function to hide the loading overlay
+// function hideLoadingOverlay() {
+//   document.getElementById('loading-overlay').style.display = 'none';
+// }
 // Fetch function to load content into the 'content' div
 function loadContent(url) {
 	showLoadingOverlay();
@@ -20,63 +20,6 @@ function loadContent(url) {
 	  console.error('Error loading content:', error);
 	}).finally(()=> {hideLoadingOverlay();});
 }
-
-// Event listener for the "All Students" button
-document.getElementById('studentsBtn').addEventListener('click', function() {
-  // Fetch the students list partial
-  loadContent('/students/studentslist');
-});
-// document.getElementById( 'studentsBtn' ).addEventListener( 'click', async ( event ) => {
-// 	try {
-// 		event.preventDefault()
-// 		console.log('hola');
-		
-// 		const response = await fetch( 'http://localhost:3001/students/');
-// 		const result = await response.json()
-// 		console.log(result);
-// 	} catch (error) {
-// 		console.log(error);
-// 	}
-// } )
-
-document.getElementById( 'studentByIdBtn' ).addEventListener( 'click', () => {
-
-} )
-
-document.getElementById( 'addStudentsBtn' ).addEventListener( 'click', () => {
-
-} )
-
-document.getElementById( 'updateStudentsBtn' ).addEventListener( 'click', () => {
-
-} )
-
-
-document.getElementById( 'deleteStudentsBtn' ).addEventListener( 'click', () => {
-
-} )
-
-document.getElementById( 'payMethodsBtn' ).addEventListener( 'click', () => {
-	loadContent(`/methods/details`)
-} )
-
-
-document.getElementById( 'payMethodByIdBtn' ).addEventListener( 'click', () => {
-	const id = prompt("Enter a method Id: ");
-	loadContent(`/methods/details/${id}`)
-} )
-
-document.getElementById( 'addPayMethodsBtn' ).addEventListener( 'click', () => {
-
-} )
-
-document.getElementById( 'updatePayMethodsBtn' ).addEventListener( 'click', () => {
-
-} )
-
-document.getElementById( 'deletePayMethodsBtn' ).addEventListener( 'click', () => {
-
-} )
 
 document.getElementById( 'paymentsBtn' ).addEventListener( 'click', () => {
 	loadContent('payments/details')
@@ -93,18 +36,67 @@ document.getElementById( 'payByStudentBtn' ).addEventListener( 'click', () => {
 } )
 
 document.getElementById( 'addPayment' ).addEventListener( 'click', () => {
-
+  const studentId = prompt( "Enter the student ID: " );
+  const paymentMethodId = prompt( "Enter the Payment Method ID: " );
+  const amount = prompt("Enter the amount: ")
+  if ( !studentId || !paymentMethodId || !amount)
+    return alert( 'Those fields must be completed' )
+  
+  const content = {studentId, paymentMethodId, amount}
+  
+  let responseStatus = '';
+  showLoadingOverlay();
+  fetch( 'payments', {
+    method: 'POST',
+    body: JSON.stringify( content ),
+    headers: {
+      "Content-type": "application/json"
+    }
+  })
+    .then( response => {
+      responseStatus = response.status;
+      response.text()
+    } )
+    .then( html => {
+	    // Insert the HTML content into the content div
+	    document.getElementById('dynamic-content').innerHTML = responseStatus == 201? "Created!!!" : html;
+	  })
+    .catch(error => {
+      console.error('Error loading content:', error);
+    }).finally(()=> {hideLoadingOverlay();});
 } )
 
 document.getElementById( 'updatePaymentBtn' ).addEventListener( 'click', () => {
-
+  const id = prompt( "Enter the payment ID: " )
+  if ( !id ) {
+    return "The ID field must be completed"
+  }
+  const name = prompt( "Enter the student ID: " );
+  const method = prompt( "Enter the Payment Method ID: " );
+  const amount = prompt( "Enter the amount: " )
+  
+  let responseStatus = '';
+  showLoadingOverlay();
+  fetch( `${id}`, {
+    method: 'PUT',
+    body: JSON.stringify( content ),
+    headers: {
+      "Content-type": "application/json"
+    }
+  })
+    .then( response => {
+      responseStatus = response.status;
+      response.text()
+    } )
+    .then( html => {
+	    // Insert the HTML content into the content div
+	    document.getElementById('dynamic-content').innerHTML = responseStatus == 200? "Updated!!!" : html;
+	  })
+    .catch(error => {
+      console.error('Error loading content:', error);
+    }).finally(()=> {hideLoadingOverlay();});
 } )
 
-// document.getElementById( 'deletePaymentBtn' ).addEventListener( 'click', () => {
-// 	const id = prompt("Enter payment Id to delete: ");
-// 	const payment_page = await fetch("/payments", {})
-
-// } )
 document.getElementById('deletePaymentBtn').addEventListener('click', function() {
   // Step 1: Prompt for payment ID
   const paymentId = prompt("Enter the payment ID to delete:");
@@ -116,10 +108,13 @@ document.getElementById('deletePaymentBtn').addEventListener('click', function()
 
   // Step 2: Fetch payment details using GET request
   fetch(`payments/${paymentId}`)
-  .then(response => {console.log(response); return response.json();})
+    .then( response => {
+      console.log( response );
+      return response.json();
+    } )
   .then(paymentDetails => {
     // Step 3: Show a confirmation box with payment details
-	console.log(paymentDetails);
+	  console.log(paymentDetails);
     const confirmMessage = `
       Are you sure you want to delete this payment?
       Payment ID: ${paymentDetails[0].payment_id}

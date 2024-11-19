@@ -110,7 +110,9 @@ const listDetailsByStudent = async( req, res ) => {
 const newPayment = async ( req, res ) => {
 	try {
 		const { studentId, paymentMethodId, amount } = req.body;
-		const data = await insertPaymentDB( studentId, paymentMethodId, amount );	
+		const data = await insertPaymentDB( studentId, paymentMethodId, amount );
+		console.log(data);
+				
 		if ( !data )
 			return res.status( 400 ).json( 'OOPS....Check the fields and try again.' )
 		
