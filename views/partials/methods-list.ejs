@@ -1,0 +1,19 @@
+<!-- views/partials/methods-list.ejs -->
+<table>
+    <thead>
+      <tr>
+        <th>Method ID</th>
+        <th>Name</th>
+        <th>Active</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% methods.forEach(method => { %>
+        <tr>
+          <td><%= method.method_id %></td>
+          <td><%= method.name %></td>
+          <td><%= method.active %></td>
+        </tr>
+      <% }) %>
+    </tbody>
+</table>  

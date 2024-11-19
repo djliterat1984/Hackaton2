@@ -4,13 +4,20 @@ const {
 	getStudentById,
 	newStudent,
 	updateStudent,
-	deleteStudent
+	deleteStudent,
+	listAllStudents,
+	listStudentById
 } = require( '../controllers/studentController.js' );
+const { getAllStudentsDB } = require('../models/studentData.js');
 
 
 const studentRouter = express.Router();
 
 studentRouter.get( '/', getAllStudents );
+
+studentRouter.get("/studentslist", listAllStudents)
+
+studentRouter.get("/studentslist/:id", listStudentById);
 
 studentRouter.get( '/:id', getStudentById );
 

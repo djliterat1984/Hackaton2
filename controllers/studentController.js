@@ -16,6 +16,16 @@ const getAllStudents = async( req, res ) => {
 	}
 }
 
+const listAllStudents = async( req, res ) => {
+	try {
+		const students = await getAllStudentsDB();
+		res.render('partials/student-list', { students });
+	} catch (error) {
+		console.log(error);
+		res.status(500).json({message:'something went wrong'})
+	}
+}
+
 const getStudentById = async( req, res ) => {
 	try {
 		const { id } = req.params;
@@ -25,6 +35,19 @@ const getStudentById = async( req, res ) => {
 		
 		console.log( data );
 		res.json(data)
+	} catch (error) {
+		console.log(error);
+		res.status(500).json({message:'something went wrong'})
+	}
+}
+
+const listStudentById = async( req, res ) => {
+	try {
+		const { id } = req.params;
+		const students = await getStudentByIdDB( id );
+		if ( !students )
+			return res.status( 404 ).json( 'OOPS....Check the fields and try again.' )
+		res.render('partials/student-list', { students });
 	} catch (error) {
 		console.log(error);
 		res.status(500).json({message:'something went wrong'})
@@ -83,4 +106,6 @@ module.exports = {
 	newStudent,
 	updateStudent,
 	deleteStudent,
+	listAllStudents,
+	listStudentById,
 }
