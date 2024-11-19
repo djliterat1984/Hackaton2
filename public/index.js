@@ -78,15 +78,17 @@ document.getElementById( 'deletePayMethodsBtn' ).addEventListener( 'click', () =
 } )
 
 document.getElementById( 'paymentsBtn' ).addEventListener( 'click', () => {
-
+	loadContent('payments/details')
 } )
 
 document.getElementById( 'payByMethodBtn' ).addEventListener( 'click', () => {
-
+	const id = prompt("Enter the method Id: ")
+	loadContent(`payments/details/method/${id}`)
 } )
 
 document.getElementById( 'payByStudentBtn' ).addEventListener( 'click', () => {
-
+	const id = prompt("Enter the student Id: ")
+	loadContent(`payments/details/student/${id}`)
 } )
 
 document.getElementById( 'addPayment' ).addEventListener( 'click', () => {

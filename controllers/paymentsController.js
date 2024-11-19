@@ -21,6 +21,17 @@ const getAllPayments = async( req, res ) => {
 	}
 }
 
+const listAllPayments = async( req, res ) => {
+	try {
+		const details = await getAllPaymentsDetailsDB();
+		res.render('partials/details-list', { details });	
+	} catch (error) {
+		console.log(error);
+		res.status(500).json({message:'something went wrong'})
+	}
+}
+
+
 const getDetailsByMethod = async( req, res ) => {
 	try {
 		const { methodId } = req.params;
@@ -47,6 +58,38 @@ const getDetailsByStudent = async( req, res ) => {
 		
 		console.log( data );
 		res.json(data)
+	} catch (error) {
+		console.log(error);
+		res.status(500).json({message:'something went wrong'})
+	}
+}
+
+const listDetailsByMethod = async( req, res ) => {
+	try {
+		const { methodId } = req.params;
+		console.log('methodid', methodId);
+		
+		const details = await getDetailsByMethodDB( methodId );
+		if ( !details )
+			return res.status( 404 ).json( 'Method not found' )
+		
+		console.log( details );
+		res.render('partials/details-list', { details });	
+	} catch (error) {
+		console.log(error);
+		res.status(500).json({message:'something went wrong'})
+	}
+}
+
+const listDetailsByStudent = async( req, res ) => {
+	try {
+		const { studentId } = req.params;
+		const details = await getDetailsByStudentDB( studentId );
+		if ( !details )
+			return res.status( 404 ).json( 'Student Not found' )
+		
+		console.log( details );
+		res.render('partials/details-list', { details });	
 	} catch (error) {
 		console.log(error);
 		res.status(500).json({message:'something went wrong'})
@@ -106,4 +149,7 @@ module.exports = {
 	newPayment,
 	updatePayment,
 	deletePayment,
+	listAllPayments,
+	listDetailsByMethod,
+	listDetailsByStudent,
 }

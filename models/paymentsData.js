@@ -40,12 +40,12 @@ const getPaymentDetailsByIdDB = (studentId) => {
       'payments.student_id',       // Student ID
       'students.name as student_name',  // Student's Name
       'payments.method_id',        // Payment Method ID
-      // 'payment_methods.name as method_name', // Payment Method Name
+      'payment_methods.name as method_name', // Payment Method Name
       'payments.amount',           // Payment Amount
       'students.debt'              // Student's Debt
     )
     .join('students', 'payments.student_id', '=', studentId)  // Join with students table
-    // .join('payment_methods', 'payments.method_id', '=', 'payment_methods.method_id')  // Join with payment_methods table
+    .join('payment_methods', 'payments.method_id', '=', 'payment_methods.method_id')  // Join with payment_methods table
     .where('payments.student_id', studentId); 
 }
 const getDetailsByStudentDB = ( student_id ) => {  
