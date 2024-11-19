@@ -12,11 +12,12 @@ const insertStudentDB = (name, debt) => {
     return db('students').insert( {name, debt},  ["id", "name", "debt"]);
 }
 
-const updateStudentDB = (id, name, debt) => {
+const updateStudentDB = ( id, name, debt ) => {
     const updateData = {};
-    if(name !== undefined) updateData.name = name;
-    if(debt !== undefined) updateData.debt = debt;
-
+    const student = getStudentByIdDB( id );
+    updateData.name = name !== '' && name !== undefined ? name: student.name;
+    updateData.debt = debt != 0 ? debt: student.debt;
+    
     if(Object.keys(updateData).length == 0) {
         return Promise.resolve({message: "No updated fields provided"});
     }
