@@ -48,6 +48,7 @@ const getPaymentDetailsByIdDB = (paymentId) => {
     .join('payment_methods', 'payments.method_id', '=', 'payment_methods.method_id')  // Join with payment_methods table
     .where('payments.payment_id', paymentId); 
 }
+
 const getDetailsByStudentDB = ( student_id ) => {  
   return db('payments')
   .select(
