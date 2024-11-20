@@ -74,6 +74,12 @@ const updatePaymentMethod = async ( req, res ) => {
 	try {
 		const { id } = req.params;
 		const { name, active } = req.body;
+		console.log( name );
+		if ( name == '' ) {
+			const method = getPaymentMethodByIdDB( id );
+			name = method.name;
+		}
+		
 		const data = await updatePaymentMethodDB( id, name, active );
 		
 		if ( !data )

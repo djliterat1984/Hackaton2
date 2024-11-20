@@ -36,9 +36,9 @@ document.getElementById( 'payByStudentBtn' ).addEventListener( 'click', () => {
 } )
 
 document.getElementById( 'addPayment' ).addEventListener( 'click', () => {
-  const studentId = prompt( "Enter the student ID: " );
-  const paymentMethodId = prompt( "Enter the Payment Method ID: " );
-  const amount = prompt("Enter the amount: ")
+  const studentId = Number(prompt( "Enter the student ID: " ));
+  const paymentMethodId = Number(prompt( "Enter the Payment Method ID: " ));
+  const amount = Number(prompt("Enter the amount: "))
   if ( !studentId || !paymentMethodId || !amount)
     return alert( 'Those fields must be completed' )
   
@@ -71,13 +71,15 @@ document.getElementById( 'updatePaymentBtn' ).addEventListener( 'click', () => {
   if ( !id ) {
     return "The ID field must be completed"
   }
-  const name = prompt( "Enter the student ID: " );
-  const method = prompt( "Enter the Payment Method ID: " );
-  const amount = prompt( "Enter the amount: " )
+  
+  const methodId = Number(prompt( "Enter the Payment Method ID: " ));
+  const newAmount = Number( prompt( "Enter the amount: " ) );
+  
+  const content = { methodId, newAmount };
   
   let responseStatus = '';
   showLoadingOverlay();
-  fetch( `${id}`, {
+  fetch( `payments/${id}`, {
     method: 'PUT',
     body: JSON.stringify( content ),
     headers: {
@@ -86,11 +88,11 @@ document.getElementById( 'updatePaymentBtn' ).addEventListener( 'click', () => {
   })
     .then( response => {
       responseStatus = response.status;
-      response.text()
+      response.json()
     } )
-    .then( html => {
-	    // Insert the HTML content into the content div
-	    document.getElementById('dynamic-content').innerHTML = responseStatus == 200? "Updated!!!" : html;
+    .then( data => {
+      // Insert the HTML content into the content div
+	    document.getElementById('dynamic-content').innerHTML = responseStatus == 200? `Updated!!!` : html;
 	  })
     .catch(error => {
       console.error('Error loading content:', error);
