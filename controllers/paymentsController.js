@@ -130,7 +130,6 @@ const updatePayment = async ( req, res ) => {
 		
 		if ( !data )
 			return res.status( 400 ).json( 'OOPS....Check the fields and try again.' )
-		console.log('=============>',data);
 		
 		res.status(200).json(data)
 	} catch (error) {
