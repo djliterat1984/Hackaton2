@@ -111,13 +111,11 @@ const newPayment = async ( req, res ) => {
 	try {
 		const { studentId, paymentMethodId, amount } = req.body;
 		const data = await insertPaymentDB( studentId, paymentMethodId, amount );
-		console.log(data);
 				
 		if ( !data )
 			return res.status( 400 ).json( 'OOPS....Check the fields and try again.' )
 		
-		console.log( data );
-		res.json(data)
+		res.status(201).json(data)
 	} catch (error) {
 		console.log(error);
 		res.status(500).json({message:'something went wrong'})
@@ -127,14 +125,13 @@ const newPayment = async ( req, res ) => {
 const updatePayment = async ( req, res ) => {
 	try {
 		const { id } = req.params;
-		const { newAmount } = req.body;
+		const newAmount = Number(req.body.newAmount);
 		const data = await updatePaymentAmountDB( id, newAmount );
 		
 		if ( !data )
 			return res.status( 400 ).json( 'OOPS....Check the fields and try again.' )
 		
-		console.log( data );
-		res.json(data)
+		res.status(200).json(data)
 	} catch (error) {
 		console.log(error);
 		res.status(500).json({message:'something went wrong'})

@@ -56,7 +56,9 @@ document.getElementById( 'updatePayMethodsBtn' ).addEventListener( 'click', () =
     return alert( 'This field must be completed' )
   
   const name = prompt( "Enter the payment method name: " );
-  const content = {name}
+  const answer = prompt( "Do you want to active the payment method?" )
+  const active = answer.toLowerCase() == 'yes'
+  const content = {name, active}
 	let responseStatus = '';
   showLoadingOverlay();
   fetch( `methods/${id}`, {

@@ -48,6 +48,7 @@ const getPaymentDetailsByIdDB = (paymentId) => {
     .join('payment_methods', 'payments.method_id', '=', 'payment_methods.method_id')  // Join with payment_methods table
     .where('payments.payment_id', paymentId); 
 }
+
 const getDetailsByStudentDB = ( student_id ) => {  
   return db('payments')
   .select(
@@ -81,19 +82,19 @@ const getDetailsByMethodDB = (method_id) => {
 }
 
 const makePayment = async (trx, student_id, method_id, amount) => {
-    // attempt to save payment
-    const payment = await trx('payments').insert({student_id, method_id, amount}, ["payment_id", "student_id", "method_id", "amount"])
-    // subtract from debt
-    const [student] = await getStudentByIdDB(student_id);
-    const updatedDebt = parseFloat(student.debt) - amount;
+  // attempt to save payment
+  const payment = await trx('payments').insert({student_id, method_id, amount}, ["payment_id", "student_id", "method_id", "amount"])
+  // subtract from debt
+    const [ student ] = await getStudentByIdDB( student_id ); 
+    const updatedDebt = parseFloat( student.debt ) - amount;
     const updateStudent = await trx('students').where({id: student_id}).update({debt: updatedDebt}, ["id", "name", "debt"])
-    return {payment, updateStudent}
+    return {payment, updateStudent}  
 }
 
 const insertPaymentDB = async (student_id, method_id, amount) => {
     const trx = await db.transaction(); // Start the transaction
     try {
-      const result = await makePayment(trx, student_id, method_id, amount);
+    const result = await makePayment( trx, student_id, method_id, amount );
       await trx.commit();
       return result;
     } catch (error) {
