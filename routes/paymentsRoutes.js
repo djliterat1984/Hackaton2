@@ -11,6 +11,7 @@ const {
 	listDetailsByMethod,
 	getPaymentById
 } = require( '../controllers/paymentsController.js' );
+const { verifyToken } = require('../middlewares/authMiddlewares.js');
 
 
 const paymentRouter = express.Router();
@@ -31,8 +32,8 @@ paymentRouter.get( '/:paymentId', getPaymentById)
 
 paymentRouter.post( '/', newPayment );
 
-paymentRouter.put( '/:id', updatePayment );
+paymentRouter.put( '/:id', verifyToken, updatePayment );
 
-paymentRouter.delete( '/:id', deletePayment );
+paymentRouter.delete( '/:id', verifyToken, deletePayment );
 
 module.exports = paymentRouter

@@ -5,9 +5,9 @@ const { getStudentByIdDB } = require("./studentData.js");
 //     return db('payments').select("payment_id", "student_id", "method_id", "amount");
 // }
 
-// const getPaymentByIdDB = (payment_id) => {
-//     return db('payments').where({payment_id}).select("payment_id", "student_id", "method_id", "amount");
-// }
+const getPaymentByIdDB = (payment_id) => {
+    return db('payments').where({payment_id}).select("payment_id", "student_id", "method_id", "amount");
+}
 
 // const getPaymentsByStudentDB = (student_id) => {
 //   return db('payments').where({student_id}).select("payment_id", "student_id", "method_id", "amount");

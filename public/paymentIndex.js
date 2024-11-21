@@ -67,21 +67,23 @@ document.getElementById( 'addPayment' ).addEventListener( 'click', () => {
 } )
 
 document.getElementById( 'updatePaymentBtn' ).addEventListener( 'click', () => {
+  const token = localStorage.getItem('authToken');
   const id = prompt( "Enter the payment ID: " )
   if ( !id ) {
     return "The ID field must be completed"
   }
-  const name = prompt( "Enter the student ID: " );
-  const method = prompt( "Enter the Payment Method ID: " );
-  const amount = prompt( "Enter the amount: " )
-  
+  const student_id = prompt( "Enter the student ID: " );
+  const method_id = prompt( "Enter the Payment Method ID: " );
+  const newAmount = prompt( "Enter the amount: " )
+  const content = {student_id, method_id, newAmount}
   let responseStatus = '';
   showLoadingOverlay();
-  fetch( `${id}`, {
+  fetch( `/payments/${id}`, {
     method: 'PUT',
     body: JSON.stringify( content ),
     headers: {
-      "Content-type": "application/json"
+      "Content-type": "application/json",
+      'Authorization': token ? `Bearer ${token}` : '',
     }
   })
     .then( response => {
@@ -113,6 +115,7 @@ document.getElementById('deletePaymentBtn').addEventListener('click', function()
       return response.json();
     } )
   .then(paymentDetails => {
+    const token = localStorage.getItem('authToken');
     // Step 3: Show a confirmation box with payment details
 	  console.log(paymentDetails);
     const confirmMessage = `
@@ -127,7 +130,8 @@ document.getElementById('deletePaymentBtn').addEventListener('click', function()
       fetch(`payments/${paymentId}`, {
         method: 'DELETE', // POST method to delete payment
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'Authorization': token ? `Bearer ${token}` : '',
         }
       })
       .then(response => response.json()) // Parse the JSON response
