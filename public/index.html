@@ -70,6 +70,23 @@
 			<!-- This area will be populated with dynamic content (e.g., student list) -->
 		</div>
 	</div>
+	<div id="login-container">
+		<form id="loginForm">
+			<div>
+			  <label for="username">Username:</label>
+			  <input type="text" id="username" name="username" required />
+			</div>
+		  
+			<div>
+			  <label for="password">Password:</label>
+			  <input type="password" id="password" name="password" required />
+			</div>
+		  
+			<button type="submit">Login</button>
+		  
+			<div id="error-message" style="color: red; display: none;"></div>
+		  </form>
+	</div>
 	<div id="menu" style='display: flex; justify-content: space-between;'>
 		<div style='width: 30%;'>
 			<h1>Payments</h1>
@@ -108,6 +125,7 @@
 			<div id='students'></div>
 		</div>
 	</div>
+	<script src="./login.js"></script>
 	<script src="./paymentIndex.js"></script>
 	<script src='./studentIndex.js'></script>
 	<script src="./paymentMethodIndex.js"></script>

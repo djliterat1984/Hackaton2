@@ -133,3 +133,4 @@ document.getElementById( 'deleteStudentsBtn' ).addEventListener( 'click', () => 
 			alert('Error fetching student details.');
 		});
 	} )
+
