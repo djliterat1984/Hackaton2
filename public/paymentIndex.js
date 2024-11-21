@@ -134,14 +134,18 @@ document.getElementById('deletePaymentBtn').addEventListener('click', function()
           'Authorization': token ? `Bearer ${token}` : '',
         }
       })
-      .then(response => response.json()) // Parse the JSON response
+      .then(response => {
+        if (!response.ok) { // Check if the status is not 200-299
+          throw new Error(`Something went wrong. Status: ${response.status}, ${response.statusText}`);
+      }
+      return response.json();})
       .then(result => {
         // Step 5: Alert the user about the deletion success
         alert(`Successfully deleted: ${JSON.stringify(result)}`);
       })
       .catch(error => {
         console.error('Error deleting payment:', error);
-        alert('There was an error deleting the payment.');
+        alert(error);
       });
     } else {
       // If not confirmed
